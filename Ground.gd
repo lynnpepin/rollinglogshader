@@ -1,8 +1,7 @@
 extends MeshInstance
 
-func _process(delta):
-	pass
+var material = self.get_surface_material(0)
 
 func _physics_process(delta):
+	material.set_shader_param("player_pos", $"../Player".translation)
 	pass
-	#self.material.set_shader_param("player_pos", $"../Player".translation)
