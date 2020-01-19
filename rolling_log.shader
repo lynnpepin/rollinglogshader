@@ -5,7 +5,7 @@
  */
 shader_type spatial;
 //render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform float RADIUS = 4.0;
+uniform float RADIUS = 2.0;
 uniform float PI = 3.14159265358979323846264;
 
 
@@ -43,13 +43,12 @@ uniform vec3 original_vertex;
 void vertex() {
 	// Add some noise
 	COLOR.rgb += 0.0;
-	VERTEX.y += 1.0*fbm(VERTEX.xz) - 0.5;
-	
+	//VERTEX.y += 1.0*fbm(VERTEX.xz) - 0.5;
 	
 	// Now let's do displacements to "roll log"
 	float dist_z = VERTEX.z - player_pos.z;
 	float dist_y = VERTEX.y; // - player_pos.y;
-	float Dz = PI*RADIUS;
+	float Dz = PI*RADIUS/2.0;
 	int side;
 	
 	// Calculate which "side" we're on
@@ -65,12 +64,12 @@ void vertex() {
 	
 	// Sides still do not work as expected!
 	if (side == 1) {
-		VERTEX.y = -(dist_z - Dz) - 2.0*RADIUS;
-		VERTEX.z = dist_y + Dz;
+		VERTEX.y = -(dist_z - Dz) - RADIUS;
+		VERTEX.z = dist_y + 2.0*Dz;
 	}
 	if (side == -1) {
-		VERTEX.y = (dist_z + Dz) - 2.0*RADIUS;
-		VERTEX.z = - (dist_y + Dz)
+		VERTEX.y = (dist_z + Dz) - RADIUS;
+		VERTEX.z = - (dist_y + 2.0*Dz)
 	}
 	if (side == 0) {
 		VERTEX.y += (dist_y + RADIUS)*cos(dist_z/RADIUS) - RADIUS;

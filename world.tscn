@@ -2,8 +2,9 @@
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
-[ext_resource path="res://rolling_log.shader" type="Shader" id=3]
-[ext_resource path="res://Ground.gd" type="Script" id=4]
+[ext_resource path="res://world_mesh.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://rolling_log.shader" type="Shader" id=4]
+[ext_resource path="res://Ground.gd" type="Script" id=5]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.5
@@ -18,14 +19,9 @@ height = 1.0
 radial_segments = 12
 rings = 12
 
-[sub_resource type="PlaneMesh" id=3]
-size = Vector2( 32, 32 )
-subdivide_width = 128
-subdivide_depth = 128
-
-[sub_resource type="ShaderMaterial" id=4]
-shader = ExtResource( 3 )
-shader_param/RADIUS = 4.0
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 4 )
+shader_param/RADIUS = 2.0
 shader_param/PI = 3.14159
 shader_param/player_pos = Vector3( 0, 0, 0 )
 shader_param/original_vertex = null
@@ -58,10 +54,17 @@ material/0 = null
 [node name="OmniLight" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2 )
 light_energy = 3.0
+shadow_enabled = true
 omni_range = 12.9614
+
+[node name="OmniLight2" type="OmniLight" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1839, 4.05476 )
+light_energy = 2.0
+shadow_enabled = true
+omni_range = 75.9771
 
 [node name="Ground" type="MeshInstance" parent="."]
 cast_shadow = 2
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-script = ExtResource( 4 )
+mesh = ExtResource( 3 )
+material/0 = SubResource( 3 )
+script = ExtResource( 5 )
