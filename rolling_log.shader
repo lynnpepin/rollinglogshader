@@ -1,12 +1,9 @@
-/* TODO:
- * 1. Add noisy texture
- * 2. Recalculate normals
- * 3. Make it a better rolling-log shape (convery-belt / cloth-over-tube)
+/* TODO: Recalculate normals, cleanup
  */
 shader_type spatial;
-//render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform float RADIUS = 2.0;
 uniform float PI = 3.14159265358979323846264;
+uniform vec3 player_pos = vec3(0.0, 0.0, 0.0);
+uniform bool active = false;
 
 
 // https://godot-es-docs.readthedocs.io/en/latest/tutorials/shading/vertex_displacement_with_shaders.html
@@ -36,7 +33,6 @@ float fbm(vec2 x) {
   return height;
 }
 
-uniform vec3 player_pos = vec3(0.0, 0.0, 0.0);
 uniform vec3 original_vertex;
 
 
@@ -48,34 +44,41 @@ void vertex() {
 	// Now let's do displacements to "roll log"
 	float dist_z = VERTEX.z - player_pos.z;
 	float dist_y = VERTEX.y; // - player_pos.y;
+	float RADIUS = 10.0;
 	float Dz = PI*RADIUS/2.0;
+	float theta = dist_z / RADIUS;
 	int side;
 	
 	// Calculate which "side" we're on
 	// 1 and -1 represent "hanging towel"
 	// 0 represents the "rolling log" part
-	if (dist_z >= Dz) {
-		side = 1;
-	} else if (dist_z <= -Dz) {
-		side = -1;
-	} else {
-		side = 0;
+	if (active) {
+		if (dist_z > Dz) {
+			side = 1;
+		} else if (dist_z < -Dz) {
+			side = -1;
+		} else {
+			side = 0;
+		}
+		
+		// Sides still do not work as expected!
+		if (side == 1) {
+			VERTEX.y = -(dist_z - Dz) - RADIUS;
+			VERTEX.z = dist_y + RADIUS;
+		}
+		if (side == -1) {
+			VERTEX.y = (dist_z + Dz) - RADIUS;
+			VERTEX.z = - (dist_y + RADIUS)
+		}
+		if (side == 0) {
+			VERTEX.y = (dist_y + RADIUS)*cos(theta) - RADIUS;
+			VERTEX.z = (dist_y + RADIUS)*sin(theta) ;
+		}
+		
+		VERTEX.z += player_pos.z;
+		
+		// todo - recalculate normals
 	}
-	
-	// Sides still do not work as expected!
-	if (side == 1) {
-		VERTEX.y = -(dist_z - Dz) - RADIUS;
-		VERTEX.z = dist_y + 2.0*Dz;
-	}
-	if (side == -1) {
-		VERTEX.y = (dist_z + Dz) - RADIUS;
-		VERTEX.z = - (dist_y + 2.0*Dz)
-	}
-	if (side == 0) {
-		VERTEX.y += (dist_y + RADIUS)*cos(dist_z/RADIUS) - RADIUS;
-		VERTEX.z += (dist_y + RADIUS)*sin(dist_z/RADIUS) ;
-	}
-	// todo - recalculate normals
 }
 
 void fragment() {
