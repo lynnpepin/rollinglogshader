@@ -1,57 +1,32 @@
-/* TODO: Recalculate normals, cleanup
+/* TODO: Recalculate normals, cleanup and comment
  */
+
 shader_type spatial;
+// player_pos updated in Ground.gd, used to calculate distance from player
 uniform float PI = 3.14159265358979323846264;
 uniform vec3 player_pos = vec3(0.0, 0.0, 0.0);
-uniform bool active = false;
+// Set "active" to  false  to turn off the displacement shader.
+uniform bool active = true;
+// Use RADIUS to determine how warped the world should be.
+uniform float RADIUS = 10.0;
+uniform bool hang = false;
+// TODO: More uniform properties to use here as generic shader
 
 
-// https://godot-es-docs.readthedocs.io/en/latest/tutorials/shading/vertex_displacement_with_shaders.html
-// hash and noise function to add simple texture to the plane
-float hash(vec2 p) {
-  return fract(sin(dot(p * 17.17, vec2(14.91, 67.31))) * 4791.9511);
-}
-
-float noise(vec2 x) {
-  vec2 p = floor(x);
-  vec2 f = fract(x);
-  f = f * f * (3.0 - 2.0 * f);
-  vec2 a = vec2(1.0, 0.0);
-  return mix(mix(hash(p + a.yy), hash(p + a.xy), f.x),
-         mix(hash(p + a.yx), hash(p + a.xx), f.x), f.y);
-}
-
-float fbm(vec2 x) {
-  float height = 0.0;
-  float amplitude = 0.5;
-  float frequency = 3.0;
-  for (int i = 0; i < 6; i++){
-    height += noise(x * frequency) * amplitude;
-    amplitude *= 0.5;
-    frequency *= 2.0;
-  }
-  return height;
-}
-
-uniform vec3 original_vertex;
 
 
 void vertex() {
-	// Add some noise
-	COLOR.rgb += 0.0;
-	//VERTEX.y += 1.0*fbm(VERTEX.xz) - 0.5;
-	
-	// Now let's do displacements to "roll log"
+	// Vertex displacement math, as a function of dist_z, dist_y
 	float dist_z = VERTEX.z - player_pos.z;
-	float dist_y = VERTEX.y; // - player_pos.y;
-	float RADIUS = 10.0;
+	float dist_y = VERTEX.y;
+	// Dz and theta is calculated from RADIUS for use in the transform. 
 	float Dz = PI*RADIUS/2.0;
 	float theta = dist_z / RADIUS;
-	int side;
 	
 	// Calculate which "side" we're on
 	// 1 and -1 represent "hanging towel"
 	// 0 represents the "rolling log" part
+	int side;
 	if (active) {
 		if (dist_z > Dz) {
 			side = 1;
@@ -61,20 +36,26 @@ void vertex() {
 			side = 0;
 		}
 		
-		// Sides still do not work as expected!
+		// set side = 0 if you want a log without "hanging sides"
+		if (!hang) { side = 0; }
+			
+	
 		if (side == 1) {
+			// positive vertical side
 			VERTEX.y = -(dist_z - Dz) - RADIUS;
 			VERTEX.z = dist_y + RADIUS;
 		}
 		if (side == -1) {
+			// negative vertical side
 			VERTEX.y = (dist_z + Dz) - RADIUS;
 			VERTEX.z = - (dist_y + RADIUS)
 		}
 		if (side == 0) {
+			// rolling log
 			VERTEX.y = (dist_y + RADIUS)*cos(theta) - RADIUS;
 			VERTEX.z = (dist_y + RADIUS)*sin(theta) ;
 		}
-		
+		// reposition world vertices
 		VERTEX.z += player_pos.z;
 		
 		// todo - recalculate normals
@@ -82,6 +63,6 @@ void vertex() {
 }
 
 void fragment() {
-	//ALBEDO = vec3(0.1, 0.3, 0.1);
+	// Add color
 	ALBEDO = vec3(0.1, 0.3, 0.05);
 }

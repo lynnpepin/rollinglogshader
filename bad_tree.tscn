@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=2]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.001
+bottom_radius = 1.25
+height = 0.25
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id=2]
+top_radius = 0.001
+height = 0.5
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.001
+bottom_radius = 0.75
+height = 0.75
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id=4]
+top_radius = 0.001
+bottom_radius = 0.125
+height = 1.0
+radial_segments = 12
+
+[sub_resource type="CylinderMesh" id=5]
+top_radius = 0.3
+bottom_radius = 0.5
+height = 1.0
+radial_segments = 12
+
+[node name="Tree" type="Spatial"]
+
+[node name="Leaves1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.125, 0 )
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="Leaves2" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="Leaves3" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Leaves4" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="Trunk" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
+mesh = SubResource( 5 )
+material/0 = null

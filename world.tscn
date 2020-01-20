@@ -23,14 +23,22 @@ rings = 12
 shader = ExtResource( 4 )
 shader_param/PI = 3.14159
 shader_param/player_pos = Vector3( 0, 0, 0 )
-shader_param/active = false
-shader_param/original_vertex = null
+shader_param/active = true
+shader_param/RADIUS = 8.0
+shader_param/hang = false
 
 [node name="Spatial" type="Spatial"]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.965926, 0.224144, -0.12941, 0, 0.5, 0.866025, 0.258819, -0.836516, 0.482963, 0, 4.92319, 0 )
 light_energy = 0.3
+light_indirect_energy = 0.0
+shadow_enabled = true
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0 )
+visible = false
+light_energy = 2.0
 light_indirect_energy = 0.0
 shadow_enabled = true
 
@@ -55,13 +63,16 @@ material/0 = null
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2 )
 light_energy = 3.0
 shadow_enabled = true
-omni_range = 12.9614
+omni_range = 26.6
+omni_shadow_mode = 0
 
 [node name="OmniLight2" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1839, 4.05476 )
 light_energy = 2.0
 shadow_enabled = true
-omni_range = 75.9771
+omni_range = 16.6
+omni_attenuation = 1.27456
+omni_shadow_mode = 0
 
 [node name="Ground" type="MeshInstance" parent="."]
 cast_shadow = 2
