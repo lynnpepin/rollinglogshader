@@ -7,13 +7,16 @@ uniform float PI = 3.14159265358979323846264;
 uniform vec3 player_pos = vec3(0.0, 0.0, 0.0);
 // Set "active" to  false  to turn off the displacement shader.
 uniform bool active = true;
+// Set "remap_normals" to true if you want lighting to take place after displacement
+uniform bool remap_normals = true;
 // Use RADIUS to determine how warped the world should be.
 uniform float RADIUS = 10.0;
 uniform bool hang = false;
-// TODO: More uniform properties to use here as generic shader
 
-
-
+void fragment() {
+	// Add color
+	ALBEDO = vec3(0.1, 0.3, 0.05);
+}
 
 void vertex() {
 	// Vertex displacement math, as a function of dist_z, dist_y
@@ -38,8 +41,6 @@ void vertex() {
 		
 		// set side = 0 if you want a log without "hanging sides"
 		if (!hang) { side = 0; }
-			
-	
 		if (side == 1) {
 			// positive vertical side
 			VERTEX.y = -(dist_z - Dz) - RADIUS;
@@ -48,7 +49,7 @@ void vertex() {
 		if (side == -1) {
 			// negative vertical side
 			VERTEX.y = (dist_z + Dz) - RADIUS;
-			VERTEX.z = - (dist_y + RADIUS)
+			VERTEX.z = - (dist_y + RADIUS);
 		}
 		if (side == 0) {
 			// rolling log
@@ -57,12 +58,26 @@ void vertex() {
 		}
 		// reposition world vertices
 		VERTEX.z += player_pos.z;
-		
-		// todo - recalculate normals
+	}
+	// todo - recalculate normals
+	if (remap_normals) {
+		if (side == 1) {
+			//vec3 normal = normalize(vec3(NORMAL.x, -NORMAL.z, NORMAL.y));
+			vec3 normal = normalize(vec3(0.0, 1.0, 0.0));
+			NORMAL = normal;
+		} else if (side == -1) {
+			//vec3 normal = normalize(vec3(NORMAL.x, NORMAL.z, -NORMAL.y));
+			vec3 normal = normalize(vec3(0.0, 1.0, 0.0));
+			NORMAL = normal;
+		} else if (side == 0) {
+			// todo - check this math!
+			vec3 normal = normalize(vec3(
+				NORMAL.x,
+				NORMAL.y * cos(theta) - NORMAL.z * sin(theta),
+				NORMAL.z * cos(theta) + NORMAL.z * sin(theta)
+			));
+			NORMAL = normal;
+		}
 	}
 }
 
-void fragment() {
-	// Add color
-	ALBEDO = vec3(0.1, 0.3, 0.05);
-}

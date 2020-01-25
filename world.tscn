@@ -24,8 +24,9 @@ shader = ExtResource( 4 )
 shader_param/PI = 3.14159
 shader_param/player_pos = Vector3( 0, 0, 0 )
 shader_param/active = true
+shader_param/remap_normals = false
 shader_param/RADIUS = 8.0
-shader_param/hang = false
+shader_param/hang = true
 
 [node name="Spatial" type="Spatial"]
 
@@ -38,7 +39,7 @@ shadow_enabled = true
 [node name="DirectionalLight2" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0 )
 visible = false
-light_energy = 2.0
+light_energy = 0.5
 light_indirect_energy = 0.0
 shadow_enabled = true
 
@@ -47,7 +48,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 script = ExtResource( 1 )
 
 [node name="Camera" type="Camera" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 0.866026, 0.5, 0, -0.5, 0.866026, 0, 3, 6 )
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 7, 7 )
 script = ExtResource( 2 )
 
 [node name="Cylinder" type="MeshInstance" parent="Player"]
@@ -60,11 +61,11 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="OmniLight" type="OmniLight" parent="Player"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2 )
-light_energy = 3.0
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.54602, 0.205388 )
+light_indirect_energy = 0.0
 shadow_enabled = true
-omni_range = 26.6
-omni_shadow_mode = 0
+shadow_bias = 0.3
+omni_range = 15.0
 
 [node name="OmniLight2" type="OmniLight" parent="Player"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 11.1839, 4.05476 )
