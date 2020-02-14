@@ -4,4 +4,4 @@ Press the WASD keys to move around and try it out! All the magic takes place in 
 
 You can set the radius and even set it to "hang" like a towel over a rack.
 
-![Screenshot of rolled world in editor.](!displacement_screenshot.png)
+![Screenshot of rolled world in editor.](displacement_screenshot.png)
