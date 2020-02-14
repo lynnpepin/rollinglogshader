@@ -1,6 +1,6 @@
 extends KinematicBody
 
-var speed = 6
+var speed = 3
 var rolling_log = null
 
 func _physics_process(delta):

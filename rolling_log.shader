@@ -1,4 +1,4 @@
-/* TODO: Recalculate normals, cleanup and comment
+/* TODO: Recalculate normals, cleanup
  */
 
 shader_type spatial;
