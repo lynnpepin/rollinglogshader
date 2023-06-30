@@ -1,0 +1,5 @@
+res://default_env.tres
+res://world.tscn
+res://Ground.gd
+res://Camera.gd
+res://Player.gd

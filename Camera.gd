@@ -1,4 +1,4 @@
-extends Camera
+extends Camera3D
 
 var speed = 0.04
 var rolling_log = null

@@ -1,18 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh"
+uid="uid://cm8f5xgkxanhw"
+path="res://.godot/imported/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh"
 
 [deps]
 
-files=[ "res://.import/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh" ]
+files=["res://.godot/imported/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh"]
 
 source_file="res://plane.obj"
-dest_files=[ "res://.import/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh", "res://.import/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh" ]
+dest_files=["res://.godot/imported/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh", "res://.godot/imported/plane.obj-91d2fd68f6d75235f3a801e0e4ced1fc.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
 optimize_mesh=true

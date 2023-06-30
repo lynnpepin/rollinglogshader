@@ -1,18 +1,24 @@
-extends KinematicBody
+extends CharacterBody3D
 
-var speed = 3
+var speed = 6
 var rolling_log = null
 
 func _physics_process(delta):
 	if Input.is_action_pressed("W"):
-		move_and_slide(Vector3(0,0,-speed))
+		set_velocity(Vector3(0,0,-speed))
+		move_and_slide()
 	if Input.is_action_pressed("S"):
-		move_and_slide(Vector3(0,0,speed))
+		set_velocity(Vector3(0,0,speed))
+		move_and_slide()
 	if Input.is_action_pressed("A"):
-		move_and_slide(Vector3(-speed,0,0))
+		set_velocity(Vector3(-speed,0,0))
+		move_and_slide()
 	if Input.is_action_pressed("D"):
-		move_and_slide(Vector3(speed,0,0))
+		set_velocity(Vector3(speed,0,0))
+		move_and_slide()
 	if Input.is_action_pressed("space"):
-		move_and_slide(Vector3(0,speed,0))
+		set_velocity(Vector3(0,speed,0))
+		move_and_slide()
 	if Input.is_action_pressed("shift"):
-		move_and_slide(Vector3(0,-speed,0))	
+		set_velocity(Vector3(0,-speed,0))
+		move_and_slide()	
