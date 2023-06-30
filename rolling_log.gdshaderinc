@@ -1,8 +1,8 @@
-
 uniform vec3 player_pos = vec3(0.0, 0.0, 0.0);
 // Set "active" to  false  to turn off the displacement shader.
 uniform bool active = true;
 // Set "remap_normals" to true if you want lighting to take place after displacement
+// recommended to keep true 
 uniform bool remap_normals = true;
 // Use RADIUS to determine how warped the world should be.
 uniform float RADIUS = 10.0;
