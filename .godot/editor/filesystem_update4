@@ -1,5 +1,9 @@
 res://default_env.tres
 res://world.tscn
-res://Ground.gd
-res://Camera.gd
+res://simple_gold.tres
 res://Player.gd
+res://rolling_log.gdshader
+res://roll.gdshaderinc
+res://rolling_log.gdshaderinc
+res://gold.gdshaderinc
+res://ground.gdshader

@@ -22,3 +22,5 @@ func _physics_process(delta):
 	if Input.is_action_pressed("shift"):
 		set_velocity(Vector3(0,-speed,0))
 		move_and_slide()	
+	
+	$"../Ground".get_active_material(0).set_shader_parameter("player_pos", self.position)
