@@ -15,20 +15,7 @@ rings = 1
 radial_segments = 12
 rings = 12
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tg0ij"]
-render_priority = 0
-shader = ExtResource("3_uxw1m")
-shader_parameter/player_pos = Vector3(0, 0, 0)
-shader_parameter/active = true
-shader_parameter/remap_normals = true
-shader_parameter/RADIUS = 10.0
-shader_parameter/hang = false
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
-shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bn4d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_00xug"]
 render_priority = 0
@@ -36,23 +23,41 @@ shader = ExtResource("3_uxw1m")
 shader_parameter/player_pos = Vector3(0, 0, 0)
 shader_parameter/active = true
 shader_parameter/remap_normals = true
-shader_parameter/RADIUS = 10.0
+shader_parameter/RADIUS = 8.0
 shader_parameter/hang = false
-shader_parameter/albedo = Color(0.352941, 0.337255, 0.317647, 1)
+shader_parameter/albedo = Color(0.188235, 0.113725, 0, 1)
 shader_parameter/point_size = 0.0
-shader_parameter/roughness = 0.021
+shader_parameter/roughness = 0.382
 shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.0
-shader_parameter/metallic = 0.0
+shader_parameter/metallic = 0.92
 
 [node name="Node3D" type="Node3D"]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.13621e-07, 5.12639, -2.84217e-14)
+light_color = Color(0, 1, 1, 1)
+light_energy = 12.0
+shadow_enabled = true
+spot_range = 33.0
+spot_angle = 70.7004
 
 [node name="DirectionalLight2" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.975806, -9.55694e-09, 0.218637, -0.218637, -4.26539e-08, 0.975806, 0, -1, -4.37114e-08, 0, 5, 0)
 light_energy = 2.0
 light_indirect_energy = 0.0
 light_volumetric_fog_energy = 0.0
-shadow_enabled = true
+shadow_normal_bias = 0.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2669, 3.74925, 0)
+light_energy = 16.0
+omni_range = 6.93895
+
+[node name="OmniLight3D" type="OmniLight3D" parent="OmniLight3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.99301, -0.272763, -5.98062)
+light_energy = 16.0
+omni_range = 6.93895
 
 [node name="Player" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -68,24 +73,17 @@ mesh = SubResource("1")
 [node name="Sphere" type="MeshInstance3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
 mesh = SubResource("2")
-surface_material_override/0 = SubResource("ShaderMaterial_tg0ij")
+surface_material_override/0 = SubResource("StandardMaterial3D_6bn4d")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.32276, 0.205388)
 light_color = Color(0.733333, 0.619608, 0.517647, 1)
 light_energy = 10.0
 light_indirect_energy = 0.0
+light_specular = 1.0
 shadow_enabled = true
 shadow_bias = 0.3
 omni_range = 16.0
-
-[node name="SpotLight3D" type="SpotLight3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 4.62639, 0)
-light_color = Color(0, 1, 1, 1)
-light_energy = 12.0
-shadow_enabled = true
-spot_range = 33.0
-spot_angle = 70.7004
 
 [node name="Ground" type="MeshInstance3D" parent="."]
 cast_shadow = 2

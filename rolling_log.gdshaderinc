@@ -10,6 +10,7 @@ uniform bool hang = false;
 
 void vertex() {
 	// Vertex displacement math, as a function of dist_z, dist_y
+	// float RADIUS = 10.0 + 1.0 * player_pos.y; // play with this if you want the world to 'unwrap' on height
 	float dist_z = VERTEX.z - player_pos.z;
 	float dist_y = VERTEX.y;
 	// Dz and theta is calculated from RADIUS for use in the transform. 
